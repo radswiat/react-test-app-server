@@ -4,6 +4,10 @@
   # Simple API server   <img width="105px" height="55px" src="https://jazzteam.org/en/wp-content/uploads/2017/02/api-icon.png">
   
   **v. 1.0.0**
+  
+  [![CircleCI](https://circleci.com/gh/radswiat/react-test-app-server.svg?style=svg)](https://circleci.com/gh/radswiat/react-test-app-server)
+  [![Maintainability](https://api.codeclimate.com/v1/badges/65fb719692efa0ded33a/maintainability)](https://codeclimate.com/github/radswiat/react-test-app-server/maintainability)
+  [![Test Coverage](https://api.codeclimate.com/v1/badges/65fb719692efa0ded33a/test_coverage)](https://codeclimate.com/github/radswiat/react-test-app-server/test_coverage)
     
   [Change log](CHANGES.md)
 
