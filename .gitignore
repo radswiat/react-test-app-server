@@ -1,0 +1,13 @@
+.idea/
+node_modules/
+/coverage/
+*.log
+/package-lock.json
+/.DS_STORE
+/.DS_Store
+/npm-debug.log.*
+/.build-info/
+/bin-api/cache/
+/_logs/
+/tests_output/
+*.DS_STORE

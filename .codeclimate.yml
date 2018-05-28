@@ -1,0 +1,43 @@
+version: "2"
+checks:
+  argument-count:
+    config:
+      threshold: 5
+  complex-logic:
+    config:
+      threshold: 5
+  file-lines:
+    config:
+      threshold: 250
+  method-complexity:
+    config:
+      threshold: 5
+  method-count:
+    config:
+      threshold: 20
+  method-lines:
+    config:
+      threshold: 25
+  nested-control-flow:
+    config:
+      threshold: 3
+  return-statements:
+    enabled: false
+exclude_patterns:
+  - "package.json"
+  - ".babelrc"
+  - ".codeclimate.yml"
+  - ".editorconfig"
+  - ".eslintrc"
+  - ".gitignore"
+  - ".lintstagedrc"
+  - "README.md"
+  - "**/config.js"
+  - "**/index.js"
+  - "**/*.yaml"
+  - "**/*.spec.js"
+  - "**/*.spec-int.js"
+  - ".circleci/**/**"
+  - "bin/server.js"
+  - "bin/config/**/**"
+  - "test/**/**"
