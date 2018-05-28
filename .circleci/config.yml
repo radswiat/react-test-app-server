@@ -8,6 +8,7 @@ jobs:
     docker:
       # specify the version you desire here
       - image: circleci/node:7.10
+      - image: circleci/mongo:3.4.4
 
     working_directory: ~/repo
 
@@ -34,4 +35,4 @@ jobs:
 
       - run:
           name: Send coverage to codeclimate
-          command: CODECLIMATE_REPO_TOKEN= node node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info
+          command: CODECLIMATE_REPO_TOKEN=f5f956268f38ef9d8e09adaf89099f2a651e99a29c53140e4cd730593378b8df node node_modules/codeclimate-test-reporter/bin/codeclimate.js < ./coverage/lcov.info
