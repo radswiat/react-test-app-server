@@ -27,7 +27,7 @@ export default new class Dictionary {
    */
   async isValidSentence(sentence) {
     // clean sentence and split up into words array
-    const words = cleanString(sentence).split(' ');
+    const words = cleanString(sentence).split(' ').filter((word) => word);
     // check every word
     // if any is invalid, break and return false
     for (const word of words) {
@@ -43,8 +43,9 @@ export default new class Dictionary {
   /**
    * Check if dictionary is already in DB
    * - if not import it for latter use
+   * TODO: split into 2 methods ( shouldImport and import )
    */
-  async importCheck() {
+  async importCheck(debugFile = null) {
 
     logger.info('Dictionary setting up, please wait ...');
 
@@ -53,22 +54,47 @@ export default new class Dictionary {
     const [errStats] = await to(this.dictionary.stats());
 
     // if dictionary got any records in DB, skip
-    if (!errStats) return logger.yarn.status('Dictionary', true);
+    if (!errStats) {
+      logger.yarn.status('Dictionary', true);
+      return {
+        status: 'IMPORT_SKIPPED',
+      };
+    }
 
-    // get dictionary txt file
-    const [err, file] = await to(fileRead(dictionaryCfg.dictionaryFilePath));
+    let file = debugFile;
 
-    // handle failure
-    if (err) return logger.error('Dictionary import check failed', err);
+    // get dictionary file when debugDictionaryList is null ( by default )
+    // this can be overwritten for test purpose
+    if (debugFile === null) {
+      // get dictionary txt file
+      const [err, data] = await to(fileRead(dictionaryCfg.dictionaryFilePath));
+
+      // handle failure
+      if (err) {
+        logger.error('Dictionary import check failed', err);
+        return {
+          status: 'IMPORT_ERROR',
+          err,
+        };
+      }
+
+      file = data;
+    }
+
+    const words = file.split(os.EOL).map((word) => word.trim()).filter((word) => word);
 
     // iterate over each line of the dictionary file
     // and add it into mongoDB
-    for (const word of file.split(os.EOL)) {
+    for (const word of words) {
       await this.dictionary.insert({
         word, queryCount: 0,
       });
     }
 
     logger.info('Dictionary setup complete');
+    return {
+      status: 'IMPORT_COMPLETE',
+      count: words.length,
+    };
   }
 };
